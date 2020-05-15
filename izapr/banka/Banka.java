@@ -14,17 +14,17 @@ public class Banka {
      * Všechny naše účty maj stejnej úrok (bez jednotek, aby se dalo rovnou
      * násobit).
      */
-    public static double urok = 0.003;
+    public double urok = 0.003;
 
     /**
      * Měsíční poplatek za vedení účtu u naší banky.
      */
-    public static double mpzvuunb = 300;
+    public double mpzvuunb = 300;
 
     /**
      * Účty všechn našich klientů.
      */
-    private static final HashMap<Long, Ucet> Ucty = new HashMap<>();
+    private final HashMap<Long, Ucet> Ucty = new HashMap<>();
 
     /**
      * Nová banka.
@@ -33,8 +33,8 @@ public class Banka {
      * @param urok Úrok na našich účtech (v procentech).
      */
     Banka(long mpzvuunb, float urok) {
-        Banka.mpzvuunb = mpzvuunb;
-        Banka.urok = urok;
+        this.mpzvuunb = mpzvuunb;
+        this.urok = urok;
     }
 
     /**
@@ -46,9 +46,9 @@ public class Banka {
      * @return Vytvořený účet.
      * @throws izapr.banka.Banka.CisloJeObsazeny Pokud je číslo už obsazený.
      */
-    public static Ucet zalozUcetSCislemNaPrani(String jap, long v, long x) throws CisloJeObsazeny {
+    public Ucet zalozUcetSCislemNaPrani(String jap, long v, long x) throws CisloJeObsazeny {
         Ucet u = new Ucet(x, jap, v);
-        Banka.Ucty.put(u.cislo, u);
+        this.Ucty.put(u.cislo, u);
         return u;
     }
 
@@ -59,9 +59,9 @@ public class Banka {
      * @param v Prvotní vklad na účet.
      * @return Vytvořený účet.
      */
-    public static Ucet zalozUcet(String jap, long v) {
+    public Ucet zalozUcet(String jap, long v) {
         Ucet u = new Ucet(jap, v);
-        Banka.Ucty.put(u.cislo, u);
+        this.Ucty.put(u.cislo, u);
         return u;
     }
 
@@ -70,8 +70,8 @@ public class Banka {
      *
      * @param cisloUctu Číslo účtu klienta.
      */
-    public static void zjistiZustatek(long cisloUctu) {
-        System.out.println("Zůstatek je: " + Banka.Ucty.get(cisloUctu).zjistiZustatek());
+    public void zjistiZustatek(long cisloUctu) {
+        System.out.println("Zůstatek je: " + this.Ucty.get(cisloUctu).zjistiZustatek());
     }
 
     /**
@@ -80,9 +80,9 @@ public class Banka {
      * @param cisloUctu Číslo účtu klienta.
      * @return Zrušený účet.
      */
-    public static Ucet zrusUcet(long cisloUctu) {
-        Ucet u = Banka.Ucty.get(cisloUctu);
-        Banka.Ucty.remove(u);
+    public Ucet zrusUcet(long cisloUctu) {
+        Ucet u = this.Ucty.get(cisloUctu);
+        this.Ucty.remove(u);
         return u;
     }
 
@@ -92,13 +92,13 @@ public class Banka {
      * @return Seznam účtů, ze kterých nešlo strhnout poplatky kvůli
      * nedostatečnýmu zůstatku.
      */
-    public static HashMap<Long, Ucet> strhniMesicniPoplatky() {
-        for (long ucet : Banka.Ucty.keySet()) {
-            Ucet ucet2 = Banka.Ucty.get(ucet);
-            ucet2.zustatek -= Banka.mpzvuunb;
+    public HashMap<Long, Ucet> strhniMesicniPoplatky() {
+        for (long ucet : this.Ucty.keySet()) {
+            Ucet ucet2 = this.Ucty.get(ucet);
+            ucet2.zustatek -= this.mpzvuunb;
         }
 
-        return Banka.Ucty;
+        return this.Ucty;
     }
 
     /**
@@ -107,13 +107,13 @@ public class Banka {
      * @return Seznam účtů, ze kterých nešlo strhnout poplatky kvůli
      * nedostatečnýmu zůstatku.
      */
-    public static HashMap<Long, Ucet> prictiUroky() {
-        for (long ucet : Banka.Ucty.keySet()) {
-            Ucet ucet2 = Banka.Ucty.get(ucet);
-            ucet2.zustatek += ucet2.zustatek * (Banka.urok);
+    public HashMap<Long, Ucet> prictiUroky() {
+        for (long ucet : this.Ucty.keySet()) {
+            Ucet ucet2 = this.Ucty.get(ucet);
+            ucet2.zustatek += ucet2.zustatek * (this.urok);
         }
 
-        return Banka.Ucty;
+        return this.Ucty;
     }
 
     /**
@@ -122,15 +122,15 @@ public class Banka {
      * @param cislo1 Číslo účtu klienta.
      * @return Zůstatek - blokovaná částka.
      */
-    public static String zjistiDisponibilniZustatek(long cislo1) {
+    public String zjistiDisponibilniZustatek(long cislo1) {
         long cislo3 = 0;
-        for (Entry<Long, Ucet> ucty : Banka.Ucty.entrySet()) {
+        for (Entry<Long, Ucet> ucty : this.Ucty.entrySet()) {
             if (ucty.getKey() == cislo1) {
                 cislo3 = cislo1;
             }
         }
 
-        return Banka.Ucty.get(cislo3).zjistiDisponibilniZustatek();
+        return this.Ucty.get(cislo3).zjistiDisponibilniZustatek();
     }
 
     public class CisloJeObsazeny extends Exception {
