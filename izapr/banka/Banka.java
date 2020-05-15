@@ -14,12 +14,12 @@ public class Banka {
      * Všechny naše účty maj stejnej úrok (bez jednotek, aby se dalo rovnou
      * násobit).
      */
-    public double urok = 0.003;
+    private double urok = 0.003;
 
     /**
      * Měsíční poplatek za vedení účtu u naší banky.
      */
-    public double mpzvuunb = 300;
+    private double mpzvuunb = 300;
 
     /**
      * Účty všechn našich klientů.
@@ -48,7 +48,7 @@ public class Banka {
      */
     public Ucet zalozUcetSCislemNaPrani(String jap, long v, long x) throws CisloJeObsazeny {
         Ucet u = new Ucet(x, jap, v);
-        this.Ucty.put(u.cislo, u);
+        this.Ucty.put(u.zjistiCislo(), u);
         return u;
     }
 
@@ -61,7 +61,7 @@ public class Banka {
      */
     public Ucet zalozUcet(String jap, long v) {
         Ucet u = new Ucet(jap, v);
-        this.Ucty.put(u.cislo, u);
+        this.Ucty.put(u.zjistiCislo(), u);
         return u;
     }
 
@@ -80,6 +80,14 @@ public class Banka {
         } else {
             return this.Ucty.get(cisloUctu).zjistiZustatek();
         }
+    }
+
+    void nastavUrok(double urok) {
+        this.urok = urok;
+    }
+
+    void nastavMesicniPoplatek(double mesicniPoplatek) {
+        this.mpzvuunb = mesicniPoplatek;
     }
 
     /**
@@ -103,7 +111,7 @@ public class Banka {
     public HashMap<Long, Ucet> strhniMesicniPoplatky() {
         for (long ucet : this.Ucty.keySet()) {
             Ucet ucet2 = this.Ucty.get(ucet);
-            ucet2.zustatek -= this.mpzvuunb;
+            ucet2.vnitrniVyber((long) this.mpzvuunb);
         }
 
         return this.Ucty;
@@ -118,7 +126,7 @@ public class Banka {
     public HashMap<Long, Ucet> prictiUroky() {
         for (long ucet : this.Ucty.keySet()) {
             Ucet ucet2 = this.Ucty.get(ucet);
-            ucet2.zustatek += ucet2.zustatek * (this.urok);
+            ucet2.vloz((long) (ucet2.zjistiZustatek() * (this.urok)));
         }
 
         return this.Ucty;

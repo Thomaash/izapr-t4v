@@ -39,12 +39,8 @@ public class Main {
     public static void otestujZustatek() {
         Ucet ucet = Banky.NNNN.zalozUcet("Saoirse", 3600);
 
-        // Byla by sranda, kdyby se to projevilo i v bance.
-        // Ale tak hloupý snad nejsou, nebo jo?
-        ucet.zustatek += 1000000000;
-
         try {
-            long zustatek = Banky.NNNN.zjistiZustatek(ucet.cislo);
+            long zustatek = Banky.NNNN.zjistiZustatek(ucet.zjistiCislo());
             if (zustatek > 3600) {
                 System.out.println("Wow! " + zustatek + " CZK.");
             } else if (zustatek == 3600) {

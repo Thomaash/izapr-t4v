@@ -11,28 +11,28 @@ public class Ucet {
      * Sem se vždy při vytvoření účtu uloží jeho číslo aby se zamezilo situacím,
      * kdy má víc různejch účtů (třeba i u různejch bank) stejný číslo.
      */
-    public static HashSet<Long> pouzityCisla = new HashSet<>();
+    private static HashSet<Long> pouzityCisla = new HashSet<>();
 
     /**
      * Číslo účtu.
      */
-    public long cislo;
+    private long cislo;
 
     /**
      * Vlastník účtu.
      */
-    public String vlastnik;
+    private String vlastnik;
 
     /**
      * Zůstatek na účtu (součet peněz k dispozici + blokovaných prostředků).
      */
-    public long zustatek = 0;
+    private long zustatek = 0;
 
     /**
      * Blokovaná částka na účtu. To jsou platby kartou atp. co se vyplatí teprv
      * v budoucnu.
      */
-    public long blokovano = 0;
+    private long blokovano = 0;
 
     /**
      * Vytvoření účtu se zadanym číslem.
@@ -121,6 +121,22 @@ public class Ucet {
         return true;
     }
 
+    void blokujCastku(long blokovanaCastka) throws NedostatekProstredku {
+        if (this.blokovano + blokovanaCastka <= this.zustatek) {
+            this.blokovano += blokovanaCastka;
+        } else {
+            throw new NedostatekProstredku();
+        }
+    }
+
+    public long zjistiCislo() {
+        return this.cislo;
+    }
+
+    public String zjistiVlastnika() {
+        return this.vlastnik;
+    }
+
     /**
      * Zjištění zůstatku na účtu.
      *
@@ -137,5 +153,13 @@ public class Ucet {
      */
     public long zjistiDisponibilniZustatek() {
         return (this.zustatek - this.blokovano);
+    }
+
+    public class NedostatekProstredku extends Exception {
+
+        public NedostatekProstredku() {
+            super("Na účtu " + cislo + " neni dostatek finančních prostředků.");
+        }
+
     }
 }
