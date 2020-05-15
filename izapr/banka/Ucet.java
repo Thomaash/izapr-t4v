@@ -43,15 +43,18 @@ class Ucet {
      * @param prvotniVklad Prvotní vklad na účet.
      */
     Ucet(long cisloUctu, String jmenoAPrijmeniVlastnika, long prvotniVklad) {
-        if (jmenoAPrijmeniVlastnika != null && !jmenoAPrijmeniVlastnika.equals("") && cisloUctu > 0 && prvotniVklad > 0) {
+        if (!(jmenoAPrijmeniVlastnika != null && !jmenoAPrijmeniVlastnika.equals(""))) {
+            throw new IllegalArgumentException("Vlastní účtu musí být nějaký jméno.");
+        } else if (!(cisloUctu > 0)) {
+            throw new IllegalArgumentException("Číslo účtu musí být kladný.");
+        } else if (!(prvotniVklad > 0)) {
+            throw new IllegalArgumentException("Prvotní vklad musí být víc než 0 kč.");
+        } else {
             this.zustatek = prvotniVklad;
             this.cislo = cisloUctu;
             this.vlastnik = jmenoAPrijmeniVlastnika;
 
             Ucet.pouzityCisla.add(this.cislo);
-        } else {
-            System.out.println("Účet musí být nějaký jméno.");
-            System.exit(0);
         }
     }
 
