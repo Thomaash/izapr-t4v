@@ -19,7 +19,7 @@ public class Banka {
     /**
      * Měsíční poplatek za vedení účtu u naší banky.
      */
-    private double mesicniPoplatekZaVedeniUctu = 300;
+    private long mesicniPoplatekZaVedeniUctu = 300;
 
     /**
      * Účty všechn našich klientů.
@@ -29,7 +29,8 @@ public class Banka {
     /**
      * Nová banka.
      *
-     * @param mesicniPoplatekZaVedeniUctu Měsíční poplatek za vedení účtu u naší banky.
+     * @param mesicniPoplatekZaVedeniUctu Měsíční poplatek za vedení účtu u naší
+     * banky.
      * @param urok Úrok na našich účtech (v procentech).
      */
     Banka(long mesicniPoplatekZaVedeniUctu, float urok) {
@@ -86,7 +87,7 @@ public class Banka {
         this.urok = urok;
     }
 
-    void nastavMesicniPoplatek(double mesicniPoplatek) {
+    void nastavMesicniPoplatek(long mesicniPoplatek) {
         this.mesicniPoplatekZaVedeniUctu = mesicniPoplatek;
     }
 
@@ -112,12 +113,15 @@ public class Banka {
      * nedostatečnýmu zůstatku.
      */
     HashMap<Long, Ucet> strhniMesicniPoplatky() {
-        for (long ucet : this.ucty.keySet()) {
-            Ucet ucet2 = this.ucty.get(ucet);
-            ucet2.vnitrniVyber((long) this.mesicniPoplatekZaVedeniUctu);
+        final HashMap<Long, Ucet> uctyVMinusu = new HashMap<>();
+
+        for (Ucet ucet : this.ucty.values()) {
+            if (!ucet.vnitrniVyber(this.mesicniPoplatekZaVedeniUctu)) {
+                uctyVMinusu.put(ucet.zjistiCislo(), ucet);
+            }
         }
 
-        return this.ucty;
+        return uctyVMinusu;
     }
 
     /**

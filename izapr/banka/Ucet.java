@@ -37,8 +37,8 @@ public class Ucet {
     /**
      * Vytvoření účtu se zadanym číslem.
      *
-     * @param cisloUctu Číslo účtu (nelze vytvořit účet, pokud už je daný číslo použitý
-     * u jinýho účtu).
+     * @param cisloUctu Číslo účtu (nelze vytvořit účet, pokud už je daný číslo
+     * použitý u jinýho účtu).
      * @param jmenoAPrijmeniVlastnika Jméno a příjmení vlastníka účtu.
      * @param prvotniVklad Prvotní vklad na účet.
      */
@@ -113,12 +113,11 @@ public class Ucet {
      * záporu.
      *
      * @param poplatek Množství korun, co se odečte od zůstatku.
-     * @return True pokud výběr proběhl, false pokud na účtu neni k dispozici
-     * dost peněz.
+     * @return False pokud je účet po odečtení v mínusu, jinak true.
      */
     boolean vnitrniVyber(long poplatek) {
         this.zustatek -= poplatek;
-        return true;
+        return this.zjistiDisponibilniZustatek() < 0;
     }
 
     void blokujCastku(long blokovanaCastka) throws NedostatekProstredku {
