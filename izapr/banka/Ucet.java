@@ -43,7 +43,7 @@ class Ucet {
      * @param prvotniVklad Prvotní vklad na účet.
      */
     Ucet(long cisloUctu, String jmenoAPrijmeniVlastnika, long prvotniVklad) {
-        if (jmenoAPrijmeniVlastnika != null && jmenoAPrijmeniVlastnika != "" && cisloUctu > 0 && prvotniVklad > 0) {
+        if (jmenoAPrijmeniVlastnika != null && !jmenoAPrijmeniVlastnika.equals("") && cisloUctu > 0 && prvotniVklad > 0) {
             this.zustatek = prvotniVklad;
             this.cislo = cisloUctu;
             this.vlastnik = jmenoAPrijmeniVlastnika;
