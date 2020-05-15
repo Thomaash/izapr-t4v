@@ -111,7 +111,7 @@ public class Banka {
      * @return Seznam účtů, ze kterých nešlo strhnout poplatky kvůli
      * nedostatečnýmu zůstatku.
      */
-    public HashMap<Long, Ucet> strhniMesicniPoplatky() {
+    HashMap<Long, Ucet> strhniMesicniPoplatky() {
         for (long ucet : this.ucty.keySet()) {
             Ucet ucet2 = this.ucty.get(ucet);
             ucet2.vnitrniVyber((long) this.mesicniPoplatekZaVedeniUctu);
@@ -126,7 +126,7 @@ public class Banka {
      * @return Seznam účtů, ze kterých nešlo strhnout poplatky kvůli
      * nedostatečnýmu zůstatku.
      */
-    public HashMap<Long, Ucet> prictiUroky() {
+    HashMap<Long, Ucet> prictiUroky() {
         for (long ucet : this.ucty.keySet()) {
             Ucet ucet2 = this.ucty.get(ucet);
             ucet2.vloz((long) (ucet2.zjistiZustatek() * (this.urok)));

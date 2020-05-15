@@ -116,7 +116,7 @@ public class Ucet {
      * @return True pokud výběr proběhl, false pokud na účtu neni k dispozici
      * dost peněz.
      */
-    public boolean vnitrniVyber(long poplatek) {
+    boolean vnitrniVyber(long poplatek) {
         this.zustatek -= poplatek;
         return true;
     }
