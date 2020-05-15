@@ -128,7 +128,7 @@ public class Banka {
      * @param cislo1 Číslo účtu klienta.
      * @return Zůstatek - blokovaná částka.
      */
-    public String zjistiDisponibilniZustatek(long cislo1) {
+    public long zjistiDisponibilniZustatek(long cislo1) {
         long cislo3 = 0;
         for (Entry<Long, Ucet> ucty : this.Ucty.entrySet()) {
             if (ucty.getKey() == cislo1) {

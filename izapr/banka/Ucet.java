@@ -126,8 +126,8 @@ public class Ucet {
      *
      * @return Kolik je na účtu korun.
      */
-    public String zjistiZustatek() {
-        return this.zustatek + " kč";
+    public long zjistiZustatek() {
+        return this.zustatek;
     }
 
     /**
@@ -135,7 +135,7 @@ public class Ucet {
      *
      * @return Kolik je na účtu korun.
      */
-    public String zjistiDisponibilniZustatek() {
-        return (this.zustatek - this.blokovano) + " kč";
+    public long zjistiDisponibilniZustatek() {
+        return (this.zustatek - this.blokovano);
     }
 }
