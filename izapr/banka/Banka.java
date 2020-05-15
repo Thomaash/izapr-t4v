@@ -44,13 +44,14 @@ public class Banka {
      * @param jmenoAPrijmeniKlienta Jméno a příjmení klienta.
      * @param prvotniVklad Prvotní vklad na účet.
      * @param cisloUctu Požadovaný číslo účtu.
-     * @return Vytvořený účet.
+     * @return Číslo nově vytvořenýho účtu.
      * @throws izapr.banka.Banka.CisloJeObsazeny Pokud je číslo už obsazený.
      */
-    public Ucet zalozUcetSCislemNaPrani(String jmenoAPrijmeniKlienta, long prvotniVklad, long cisloUctu) throws CisloJeObsazeny {
+    public long zalozUcetSCislemNaPrani(String jmenoAPrijmeniKlienta, long prvotniVklad, long cisloUctu) throws CisloJeObsazeny {
         Ucet ucet = new Ucet(cisloUctu, jmenoAPrijmeniKlienta, prvotniVklad);
         this.ucty.put(ucet.zjistiCislo(), ucet);
-        return ucet;
+
+        return cisloUctu;
     }
 
     /**
@@ -58,12 +59,13 @@ public class Banka {
      *
      * @param jmenoAPrijmeniKlienta Jméno a příjmení klienta.
      * @param prvotniVklad Prvotní vklad na účet.
-     * @return Vytvořený účet.
+     * @return Číslo nově vytvořenýho účtu.
      */
-    public Ucet zalozUcet(String jmenoAPrijmeniKlienta, long prvotniVklad) {
+    public long zalozUcet(String jmenoAPrijmeniKlienta, long prvotniVklad) {
         Ucet ucet = new Ucet(jmenoAPrijmeniKlienta, prvotniVklad);
         this.ucty.put(ucet.zjistiCislo(), ucet);
-        return ucet;
+
+        return ucet.zjistiCislo();
     }
 
     /**

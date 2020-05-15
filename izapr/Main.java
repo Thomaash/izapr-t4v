@@ -2,7 +2,6 @@ package izapr;
 
 import izapr.banka.Banka;
 import izapr.banka.Banky;
-import izapr.banka.Ucet;
 
 public class Main {
 
@@ -37,10 +36,10 @@ public class Main {
     }
 
     public static void otestujZustatek() {
-        Ucet ucet = Banky.NNNN.zalozUcet("Saoirse", 3600);
+        long cisloUctu = Banky.NNNN.zalozUcet("Saoirse", 3600);
 
         try {
-            long zustatek = Banky.NNNN.zjistiZustatek(ucet.zjistiCislo());
+            long zustatek = Banky.NNNN.zjistiZustatek(cisloUctu);
             if (zustatek > 3600) {
                 System.out.println("Wow! " + zustatek + " CZK.");
             } else if (zustatek == 3600) {

@@ -5,7 +5,7 @@ import java.util.HashSet;
 /**
  * Naše vnitřní třída pro údaje o účtech.
  */
-public class Ucet {
+class Ucet {
 
     /**
      * Sem se vždy při vytvoření účtu uloží jeho číslo aby se zamezilo situacím,
@@ -42,7 +42,7 @@ public class Ucet {
      * @param jmenoAPrijmeniVlastnika Jméno a příjmení vlastníka účtu.
      * @param prvotniVklad Prvotní vklad na účet.
      */
-    public Ucet(long cisloUctu, String jmenoAPrijmeniVlastnika, long prvotniVklad) {
+    Ucet(long cisloUctu, String jmenoAPrijmeniVlastnika, long prvotniVklad) {
         if (jmenoAPrijmeniVlastnika != null && jmenoAPrijmeniVlastnika != "" && cisloUctu > 0 && prvotniVklad > 0) {
             this.zustatek = prvotniVklad;
             this.cislo = cisloUctu;
@@ -59,7 +59,7 @@ public class Ucet {
      * @param jmenoAPrijmeniVlastnika Jméno a příjmení vlastníka účtu.
      * @param prvotniVklad Prvotní vklad na účet.
      */
-    public Ucet(String jmenoAPrijmeniVlastnika, long prvotniVklad) {
+    Ucet(String jmenoAPrijmeniVlastnika, long prvotniVklad) {
         this((long) (Math.random() * 100), jmenoAPrijmeniVlastnika, prvotniVklad);
     }
 
@@ -68,7 +68,7 @@ public class Ucet {
      *
      * @param castka Množství korun, co se přičte k zůstatku.
      */
-    public void vloz(long castka) {
+    void vloz(long castka) {
         this.zustatek += castka;
     }
 
@@ -79,7 +79,7 @@ public class Ucet {
      * @return True pokud výběr proběhl, false pokud na účtu neni k dispozici
      * dost peněz.
      */
-    public boolean vyber(long castka) {
+    boolean vyber(long castka) {
         if (castka > this.zustatek) {
             this.zustatek -= castka;
             return true;
@@ -93,7 +93,7 @@ public class Ucet {
      *
      * @return Nepoužitý číslo účtu.
      */
-    public static long najdiNCU() {
+    static long najdiNCU() {
         long cisloUctu = 0;
 
         for (;; ++cisloUctu) {
@@ -128,11 +128,11 @@ public class Ucet {
         }
     }
 
-    public long zjistiCislo() {
+    long zjistiCislo() {
         return this.cislo;
     }
 
-    public String zjistiVlastnika() {
+    String zjistiVlastnika() {
         return this.vlastnik;
     }
 
@@ -141,7 +141,7 @@ public class Ucet {
      *
      * @return Kolik je na účtu korun.
      */
-    public long zjistiZustatek() {
+    long zjistiZustatek() {
         return this.zustatek;
     }
 
@@ -150,13 +150,13 @@ public class Ucet {
      *
      * @return Kolik je na účtu korun.
      */
-    public long zjistiDisponibilniZustatek() {
+    long zjistiDisponibilniZustatek() {
         return (this.zustatek - this.blokovano);
     }
 
-    public class NedostatekProstredku extends Exception {
+    class NedostatekProstredku extends Exception {
 
-        public NedostatekProstredku() {
+        NedostatekProstredku() {
             super("Na účtu " + cislo + " neni dostatek finančních prostředků.");
         }
 
