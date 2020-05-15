@@ -95,15 +95,11 @@ class Ucet {
      *
      * @return Nepoužitý číslo účtu.
      */
-    static long najdiNCU() {
-        long cisloUctu = 0;
+    static long najdiNepouzityCisloUctu() {
+        long cisloUctu = 1;
 
-        for (;; ++cisloUctu) {
-            if (Ucet.pouzityCisla.contains(cisloUctu)) {
-                continue;
-            } else {
-                break;
-            }
+        while (Ucet.pouzityCisla.contains(cisloUctu)) {
+            ++cisloUctu;
         }
 
         return cisloUctu;
