@@ -138,18 +138,17 @@ public class Banka {
     /**
      * Zjisti disponibilní zůstatek na účtu.
      *
-     * @param cislo1 Číslo účtu klienta.
+     * @param cisloUctu Číslo účtu klienta.
      * @return Zůstatek - blokovaná částka.
+     * @throws izapr.banka.Banka.UcetNeexistuje Pokud požadovanej účet u týdle
+     * banky neexistuje.
      */
-    public long zjistiDisponibilniZustatek(long cislo1) {
-        long cislo3 = 0;
-        for (Entry<Long, Ucet> ucty : this.ucty.entrySet()) {
-            if (ucty.getKey() == cislo1) {
-                cislo3 = cislo1;
-            }
+    public long zjistiDisponibilniZustatek(long cisloUctu) throws UcetNeexistuje {
+        if (this.ucty.containsKey(cisloUctu)) {
+            return this.ucty.get(cisloUctu).zjistiDisponibilniZustatek();
+        } else {
+            throw new UcetNeexistuje("Účet s číslem " + cisloUctu + " neexistuje.");
         }
-
-        return this.ucty.get(cislo3).zjistiDisponibilniZustatek();
     }
 
     public class CisloJeObsazeny extends Exception {
