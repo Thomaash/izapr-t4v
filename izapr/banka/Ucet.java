@@ -81,12 +81,11 @@ class Ucet {
      * @return True pokud výběr proběhl, false pokud na účtu neni k dispozici
      * dost peněz.
      */
-    boolean vyber(long castka) {
-        if (castka > this.zustatek) {
+    void vyber(long castka) throws NedostatekProstredku {
+        if (castka <= this.zjistiDisponibilniZustatek()) {
             this.zustatek -= castka;
-            return true;
         } else {
-            return false;
+            throw new NedostatekProstredku();
         }
     }
 
