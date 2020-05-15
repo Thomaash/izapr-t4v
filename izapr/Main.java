@@ -43,15 +43,20 @@ public class Main {
         // Ale tak hloupý snad nejsou, nebo jo?
         ucet.zustatek += 1000000000;
 
-        long zustatek = -1;
-        /* zustatek = */ Banky.NNNN.zjistiZustatek(ucet.cislo);
-        // Na co je mi metoda zjisti zůstatek, když mi ten zůstatek nezistí?
-        if (zustatek > 3600) {
-            System.out.println("Wow! " + zustatek + " CZK.");
-        } else if (zustatek == 3600) {
-            System.out.println((zustatek / 1000d) + " grand. Not great, not terrible.");
-        } else {
-            System.out.println(zustatek + "??");
+        try {
+            long zustatek = -1;
+            /* zustatek = */ Banky.NNNN.zjistiZustatek(ucet.cislo);
+            // Na co je mi metoda zjisti zůstatek, když mi ten zůstatek nezistí?
+            if (zustatek > 3600) {
+                System.out.println("Wow! " + zustatek + " CZK.");
+            } else if (zustatek == 3600) {
+                System.out.println((zustatek / 1000d) + " grand. Not great, not terrible.");
+            } else {
+                System.out.println(zustatek + "??");
+            }
+        } catch (Banka.UcetNeexistuje exception) {
+            System.out.println(exception);
+            System.out.println("Proč nemám účet?");
         }
     }
 
@@ -61,6 +66,9 @@ public class Main {
             Banky.SB.zjistiZustatek(8);
 
             System.out.println("Proč má cizí banka informace o mym účtu?");
+        } catch (Banka.UcetNeexistuje exception) {
+            System.out.println(exception);
+            System.out.println("Ajo vlastně, to je jiná banka.");
         } catch (Banka.CisloJeObsazeny exception) {
             System.out.println(exception);
             System.out.println("Už jsem se bál, že budou vědět, jak sem chudej.");
