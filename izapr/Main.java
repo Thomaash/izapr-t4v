@@ -44,9 +44,7 @@ public class Main {
         ucet.zustatek += 1000000000;
 
         try {
-            long zustatek = -1;
-            /* zustatek = */ Banky.NNNN.zjistiZustatek(ucet.cislo);
-            // Na co je mi metoda zjisti zůstatek, když mi ten zůstatek nezistí?
+            long zustatek = Banky.NNNN.zjistiZustatek(ucet.cislo);
             if (zustatek > 3600) {
                 System.out.println("Wow! " + zustatek + " CZK.");
             } else if (zustatek == 3600) {

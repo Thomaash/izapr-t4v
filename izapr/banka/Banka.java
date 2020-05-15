@@ -69,14 +69,16 @@ public class Banka {
      * Zjisti zůstatek na účtu.
      *
      * @param cisloUctu Číslo účtu klienta.
-     * @throws izapr.banka.Banka.UcetNeexistuje Pokud žádný účet s timdle číslem u týdle banky veden neni.
+     * @return Zůstatek na požadovan účtu.
+     * @throws izapr.banka.Banka.UcetNeexistuje Pokud žádný účet s timdle číslem
+     * u týdle banky veden neni.
      */
-    public void zjistiZustatek(long cisloUctu) throws UcetNeexistuje {
+    public long zjistiZustatek(long cisloUctu) throws UcetNeexistuje {
         final Ucet ucet = this.Ucty.get(cisloUctu);
         if (ucet == null) {
             throw new UcetNeexistuje("Účet s číslem " + cisloUctu + " nenalezen.");
         } else {
-            System.out.println("Zůstatek je: " + this.Ucty.get(cisloUctu).zjistiZustatek());
+            return this.Ucty.get(cisloUctu).zjistiZustatek();
         }
     }
 
