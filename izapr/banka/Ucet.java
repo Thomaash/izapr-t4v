@@ -62,7 +62,7 @@ class Ucet {
      * @param prvotniVklad Prvotní vklad na účet.
      */
     Ucet(String jmenoAPrijmeniVlastnika, long prvotniVklad) {
-        this((long) (Math.random() * 100), jmenoAPrijmeniVlastnika, prvotniVklad);
+        this(Ucet.najdiNepouzityCisloUctu(), jmenoAPrijmeniVlastnika, prvotniVklad);
     }
 
     /**
