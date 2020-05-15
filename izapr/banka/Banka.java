@@ -94,12 +94,15 @@ public class Banka {
      * Zrušení účtu.
      *
      * @param cisloUctu Číslo účtu klienta.
-     * @return Zrušený účet.
+     * @throws izapr.banka.Banka.UcetNeexistuje Pokud účet s danym číslem u
+     * týdle banky neni.
      */
-    public Ucet zrusUcet(long cisloUctu) {
-        Ucet ucet = this.ucty.get(cisloUctu);
-        this.ucty.remove(ucet);
-        return ucet;
+    public void zrusUcet(long cisloUctu) throws UcetNeexistuje {
+        if (this.ucty.containsKey(cisloUctu)) {
+            this.ucty.remove(cisloUctu);
+        } else {
+            throw new UcetNeexistuje("Účet s číslem " + cisloUctu + " neexistuje.");
+        }
     }
 
     /**
