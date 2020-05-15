@@ -47,6 +47,8 @@ class Ucet {
             this.zustatek = prvotniVklad;
             this.cislo = cisloUctu;
             this.vlastnik = jmenoAPrijmeniVlastnika;
+
+            Ucet.pouzityCisla.add(this.cislo);
         } else {
             System.out.println("Účet musí být nějaký jméno.");
             System.exit(0);
