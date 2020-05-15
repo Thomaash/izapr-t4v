@@ -126,17 +126,13 @@ public class Banka {
 
     /**
      * Pričte úroky na všechny účty.
-     *
-     * @return Seznam účtů, ze kterých nešlo strhnout poplatky kvůli
-     * nedostatečnýmu zůstatku.
      */
-    HashMap<Long, Ucet> prictiUroky() {
-        for (long ucet : this.ucty.keySet()) {
-            Ucet ucet2 = this.ucty.get(ucet);
-            ucet2.vloz((long) (ucet2.zjistiZustatek() * (this.urok)));
+    void prictiUroky() {
+        for (Ucet ucet : this.ucty.values()) {
+            if (ucet.zjistiZustatek() > 0) {
+                ucet.vloz((long) (ucet.zjistiZustatek() * this.urok));
+            }
         }
-
-        return this.ucty;
     }
 
     /**
