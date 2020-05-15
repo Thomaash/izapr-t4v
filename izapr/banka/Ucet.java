@@ -37,16 +37,16 @@ public class Ucet {
     /**
      * Vytvoření účtu se zadanym číslem.
      *
-     * @param c Číslo účtu (nelze vytvořit účet, pokud už je daný číslo použitý
+     * @param cisloUctu Číslo účtu (nelze vytvořit účet, pokud už je daný číslo použitý
      * u jinýho účtu).
-     * @param v Jméno a příjmení vlastníka účtu.
-     * @param o Prvotní vklad na účet.
+     * @param jmenoAPrijmeniVlastnika Jméno a příjmení vlastníka účtu.
+     * @param prvotniVklad Prvotní vklad na účet.
      */
-    public Ucet(long c, String v, long o) {
-        if (v != null && v != "" && c > 0 && o > 0) {
-            this.zustatek = o;
-            this.cislo = c;
-            this.vlastnik = v;
+    public Ucet(long cisloUctu, String jmenoAPrijmeniVlastnika, long prvotniVklad) {
+        if (jmenoAPrijmeniVlastnika != null && jmenoAPrijmeniVlastnika != "" && cisloUctu > 0 && prvotniVklad > 0) {
+            this.zustatek = prvotniVklad;
+            this.cislo = cisloUctu;
+            this.vlastnik = jmenoAPrijmeniVlastnika;
         } else {
             System.out.println("Účet musí být nějaký jméno.");
             System.exit(0);
@@ -56,11 +56,11 @@ public class Ucet {
     /**
      * Vytvoření účtu pro novýho klienta.
      *
-     * @param v Jméno a příjmení vlastníka účtu.
-     * @param o Prvotní vklad na účet.
+     * @param jmenoAPrijmeniVlastnika Jméno a příjmení vlastníka účtu.
+     * @param prvotniVklad Prvotní vklad na účet.
      */
-    public Ucet(String v, long o) {
-        this((long) (Math.random() * 100), v, o);
+    public Ucet(String jmenoAPrijmeniVlastnika, long prvotniVklad) {
+        this((long) (Math.random() * 100), jmenoAPrijmeniVlastnika, prvotniVklad);
     }
 
     /**
@@ -94,17 +94,17 @@ public class Ucet {
      * @return Nepoužitý číslo účtu.
      */
     public static long najdiNCU() {
-        long i = 0;
+        long cisloUctu = 0;
 
-        for (;; ++i) {
-            if (Ucet.pouzityCisla.contains(i)) {
+        for (;; ++cisloUctu) {
+            if (Ucet.pouzityCisla.contains(cisloUctu)) {
                 continue;
             } else {
                 break;
             }
         }
 
-        return i;
+        return cisloUctu;
     }
 
     /**

@@ -19,50 +19,50 @@ public class Banka {
     /**
      * Měsíční poplatek za vedení účtu u naší banky.
      */
-    private double mpzvuunb = 300;
+    private double mesicniPoplatekZaVedeniUctu = 300;
 
     /**
      * Účty všechn našich klientů.
      */
-    private final HashMap<Long, Ucet> Ucty = new HashMap<>();
+    private final HashMap<Long, Ucet> ucty = new HashMap<>();
 
     /**
      * Nová banka.
      *
-     * @param mpzvuunb Měsíční poplatek za vedení účtu u naší banky.
+     * @param mesicniPoplatekZaVedeniUctu Měsíční poplatek za vedení účtu u naší banky.
      * @param urok Úrok na našich účtech (v procentech).
      */
-    Banka(long mpzvuunb, float urok) {
-        this.mpzvuunb = mpzvuunb;
+    Banka(long mesicniPoplatekZaVedeniUctu, float urok) {
+        this.mesicniPoplatekZaVedeniUctu = mesicniPoplatekZaVedeniUctu;
         this.urok = urok;
     }
 
     /**
      * Nový účet s číslem na přání (pokud je volný).
      *
-     * @param jap Jméno a příjmení klienta.
-     * @param v Prvotní vklad na účet.
-     * @param x Požadovaný číslo účtu.
+     * @param jmenoAPrijmeniKlienta Jméno a příjmení klienta.
+     * @param prvotniVklad Prvotní vklad na účet.
+     * @param cisloUctu Požadovaný číslo účtu.
      * @return Vytvořený účet.
      * @throws izapr.banka.Banka.CisloJeObsazeny Pokud je číslo už obsazený.
      */
-    public Ucet zalozUcetSCislemNaPrani(String jap, long v, long x) throws CisloJeObsazeny {
-        Ucet u = new Ucet(x, jap, v);
-        this.Ucty.put(u.zjistiCislo(), u);
-        return u;
+    public Ucet zalozUcetSCislemNaPrani(String jmenoAPrijmeniKlienta, long prvotniVklad, long cisloUctu) throws CisloJeObsazeny {
+        Ucet ucet = new Ucet(cisloUctu, jmenoAPrijmeniKlienta, prvotniVklad);
+        this.ucty.put(ucet.zjistiCislo(), ucet);
+        return ucet;
     }
 
     /**
      * Nový účet.
      *
-     * @param jap Jméno a příjmení klienta.
-     * @param v Prvotní vklad na účet.
+     * @param jmenoAPrijmeniKlienta Jméno a příjmení klienta.
+     * @param prvotniVklad Prvotní vklad na účet.
      * @return Vytvořený účet.
      */
-    public Ucet zalozUcet(String jap, long v) {
-        Ucet u = new Ucet(jap, v);
-        this.Ucty.put(u.zjistiCislo(), u);
-        return u;
+    public Ucet zalozUcet(String jmenoAPrijmeniKlienta, long prvotniVklad) {
+        Ucet ucet = new Ucet(jmenoAPrijmeniKlienta, prvotniVklad);
+        this.ucty.put(ucet.zjistiCislo(), ucet);
+        return ucet;
     }
 
     /**
@@ -74,11 +74,11 @@ public class Banka {
      * u týdle banky veden neni.
      */
     public long zjistiZustatek(long cisloUctu) throws UcetNeexistuje {
-        final Ucet ucet = this.Ucty.get(cisloUctu);
+        final Ucet ucet = this.ucty.get(cisloUctu);
         if (ucet == null) {
             throw new UcetNeexistuje("Účet s číslem " + cisloUctu + " nenalezen.");
         } else {
-            return this.Ucty.get(cisloUctu).zjistiZustatek();
+            return this.ucty.get(cisloUctu).zjistiZustatek();
         }
     }
 
@@ -87,7 +87,7 @@ public class Banka {
     }
 
     void nastavMesicniPoplatek(double mesicniPoplatek) {
-        this.mpzvuunb = mesicniPoplatek;
+        this.mesicniPoplatekZaVedeniUctu = mesicniPoplatek;
     }
 
     /**
@@ -97,9 +97,9 @@ public class Banka {
      * @return Zrušený účet.
      */
     public Ucet zrusUcet(long cisloUctu) {
-        Ucet u = this.Ucty.get(cisloUctu);
-        this.Ucty.remove(u);
-        return u;
+        Ucet ucet = this.ucty.get(cisloUctu);
+        this.ucty.remove(ucet);
+        return ucet;
     }
 
     /**
@@ -109,12 +109,12 @@ public class Banka {
      * nedostatečnýmu zůstatku.
      */
     public HashMap<Long, Ucet> strhniMesicniPoplatky() {
-        for (long ucet : this.Ucty.keySet()) {
-            Ucet ucet2 = this.Ucty.get(ucet);
-            ucet2.vnitrniVyber((long) this.mpzvuunb);
+        for (long ucet : this.ucty.keySet()) {
+            Ucet ucet2 = this.ucty.get(ucet);
+            ucet2.vnitrniVyber((long) this.mesicniPoplatekZaVedeniUctu);
         }
 
-        return this.Ucty;
+        return this.ucty;
     }
 
     /**
@@ -124,12 +124,12 @@ public class Banka {
      * nedostatečnýmu zůstatku.
      */
     public HashMap<Long, Ucet> prictiUroky() {
-        for (long ucet : this.Ucty.keySet()) {
-            Ucet ucet2 = this.Ucty.get(ucet);
+        for (long ucet : this.ucty.keySet()) {
+            Ucet ucet2 = this.ucty.get(ucet);
             ucet2.vloz((long) (ucet2.zjistiZustatek() * (this.urok)));
         }
 
-        return this.Ucty;
+        return this.ucty;
     }
 
     /**
@@ -140,13 +140,13 @@ public class Banka {
      */
     public long zjistiDisponibilniZustatek(long cislo1) {
         long cislo3 = 0;
-        for (Entry<Long, Ucet> ucty : this.Ucty.entrySet()) {
+        for (Entry<Long, Ucet> ucty : this.ucty.entrySet()) {
             if (ucty.getKey() == cislo1) {
                 cislo3 = cislo1;
             }
         }
 
-        return this.Ucty.get(cislo3).zjistiDisponibilniZustatek();
+        return this.ucty.get(cislo3).zjistiDisponibilniZustatek();
     }
 
     public class CisloJeObsazeny extends Exception {
